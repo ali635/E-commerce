@@ -30,39 +30,44 @@
                 <ul class="nav navbar-nav float-right">
                     <li class="dropdown dropdown-user nav-item">
                         <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
-                         <span class="mr-1">{{ __('admin/sidebar.welcome') }}
-                            <span
-                                class="user-name text-bold-700">  {{ auth('admin')->user()->name }}</span>
-                            </span>
-                             
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="{{ route('edit.profile') }}"><i
-                                    class="ft-user"></i> {{ __('admin/sidebar.personal_modify') }} </a>
+                <span class="mr-1">مرجبا
+                  <span
+                      class="user-name text-bold-700">  {{auth('admin') -> user() -> name}}</span>
+                </span>
+                         </a>
+                        <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="{{route('edit.profile')}}"><i
+                                    class="ft-user"></i> تعديل الملف الشحصي </a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{{ route('admin.logout') }}"><i class="ft-power"></i> 
-                                {{ __('admin/sidebar.logout') }}
-                            </a>
+                            <a class="dropdown-item" href="{{route('admin.logout')}}"><i class="ft-power"></i> تسجيل
+                                الخروج </a>
                         </div>
                     </li>
+
                     <li class="dropdown dropdown-user nav-item">
                         <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
-                         <span class="mr-1">
-                            <span
-                                class="user-name text-bold-700">  {{ __('admin/sidebar.languages') }}</span>
-                            </span>
-                           </a>
+                <span class="mr-1">
+                  <span
+                      class="user-name text-bold-700">  {{App::getLocale()}}</span>
+                </span>
+
+                        </a>
                         <div class="dropdown-menu dropdown-menu-right">
+
                             @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                                <a rel="alternate" class="dropdown-item" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+
+                                <a class="dropdown-item" rel="alternate" hreflang="{{ $localeCode }}"
+                                   href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
                                     {{ $properties['native'] }}
                                 </a>
+
                                 <div class="dropdown-divider"></div>
                             @endforeach
                         </div>
                     </li>
+
                     <li class="dropdown dropdown-notification nav-item">
                         <a class="nav-link nav-link-label" href="#" data-toggle="dropdown"><i class="ficon ft-bell"></i>
-                            <span class="badge badge-pill badge-default badge-danger badge-default badge-up badge-glow">5</span>
+                            <span class="notification-counter badge badge-pill badge-default badge-danger badge-default badge-up badge-glow">5</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
                             <li class="dropdown-menu-header">

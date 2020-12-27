@@ -26,10 +26,16 @@
                         </a>
                     </div>
                     <div id="_desktop_cart">
-                        <div class="blockcart cart-preview active" data-refresh-url="//demo.bestprestashoptheme.com/savemart/en/module/ps_shoppingcart/ajax">
+                        <div class="blockcart cart-preview active" data-refresh-url="">
                             <div class="header-cart">
                                 <div class="cart-left">
-                                    <div class="shopping-cart"><i class="zmdi zmdi-shopping-cart"></i></div>
+                                    <a href="{{route('site.cart.index')}}" title="My Wishlists">
+                                        <div class="shopping-cart">
+                                            <i class="zmdi zmdi-shopping-cart"></i>
+
+                                        </div>
+
+                                    </a>
                                     <div class="cart-products-count">0</div>
                                 </div>
                                 <div class="cart-right d-flex flex-column align-self-end ml-13">
@@ -37,15 +43,8 @@
                                     <span class="cart-item"> items</span>
                                 </div>
                             </div>
-                            <div class="cart_block ">
-                                <div class="cart-block-content">
-                                    <div class="no-items">
-                                        No products in the cart
-                                    </div>
-                                </div>
-                            </div>
+
                         </div>
-                    </div>
                 </div>
             </div>
         </div>

@@ -14,6 +14,7 @@ class BrandsController extends Controller
     public function index()
     {
          $brands = Brand::orderBy('id','DESC') -> paginate(PAGINATION_COUNT);
+         
         return view('dashboard.brands.index', compact('brands'));
     }
 
@@ -46,7 +47,7 @@ class BrandsController extends Controller
         //save translations
         $brand->name = $request->name;
         $brand ->photo = $fileName;
-
+        
         $brand->save();
         DB::commit();
         return redirect()->route('admin.brands')->with(['success' => __('admin/sidebar.add_brand')]);

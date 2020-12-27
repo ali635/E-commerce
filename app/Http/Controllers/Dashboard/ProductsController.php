@@ -188,7 +188,9 @@ class ProductsController extends Controller
                 $photoLink=public_path('assets/'.$photoLink);
                 unlink($photoLink);
             }
+            
             $images= Image::where('product_id',$id)->delete();
+
             $product->delete();
             
         

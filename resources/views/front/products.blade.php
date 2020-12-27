@@ -70,9 +70,9 @@
                                                                  data-full-size-image-url="{{$product -> images[0] -> photo ?? ''}}"
                                                                  width="600" height="600">
                                                             <img class="img-fluid image-secondary"
-                                                                 src="{{$product -> images[0] -> photo ?? ''}}"
+                                                                 src="{{$product -> images[1] -> photo ?? ''}}"
                                                                  alt=""
-                                                                 data-full-size-image-url="{{$product -> images[0] -> photo ?? ''}}"
+                                                                 data-full-size-image-url="{{$product -> images[1] -> photo ?? ''}}"
                                                                  width="600" height="600">
                                                         </a>
 
@@ -135,7 +135,7 @@
                                                                 @csrf
                                                                 <input type="hidden" name="id_product"
                                                                        value="{{$product -> id}}">
-                                                                <a class="add-to-cart" href="#"
+                                                                <a class="add-to-cart cart-addition" data-product-id="{{$product -> id}}" data-product-slug="{{$product -> slug}}" href="#"
                                                                    data-button-action="add-to-cart"><i
                                                                         class="novicon-cart"></i><span>{{ __('site/site.add_to_cart') }}</span></a>
                                                             </form>
@@ -234,6 +234,19 @@
                     $('.alert-modal').css('display','block');
                     else
                     $('.alert-modal2').css('display','block');
+                }
+            });
+        });
+        $(document).on('click', '.cart-addition', function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'post',
+                url: "{{Route('site.cart.add')}}",
+                data: {
+                    'product_id': $(this).attr('data-product-id'),
+                    'product_slug' : $(this).attr('data-product-slug'),
+                },
+                success: function (data) {
                 }
             });
         });

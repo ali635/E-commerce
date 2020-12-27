@@ -26,6 +26,7 @@ class MainCategoryRequest extends FormRequest
     {
         return [
             'name' => 'required',
+            'photo' => 'required_without:id|mimes:jpg,jpeg,png',
             'slug' => 'required|unique:categories,slug,'.$this -> id
         ];
         foreach(CategoryType::getAll() as $key => $val)
