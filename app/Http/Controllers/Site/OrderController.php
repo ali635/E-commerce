@@ -15,7 +15,7 @@ use App\Coupon;
 
 class OrderController extends Controller
 {
-
+    
     /**
     * Instance of Basket.
     *
@@ -70,15 +70,12 @@ class OrderController extends Controller
     */
     public function postCreate(Request $request)
     {
+
         $v = validator($request->all(), [
             'name' => 'required|min:3',
             'phone' => 'required|phone',
-            'address1' => 'required|min:3',
-            'address2' => 'min:3',
-            'lat' => 'numeric|required',
-            'lng' => 'numeric|required',
-            'loc' => 'min:3|required',
-            'country_id' => 'required|integer|exists:countries,id',
+            'address_1' => 'required|min:3',
+            'address_2' => 'min:3',
             'state_id' => 'required|integer|exists:states,id',
             'company_id' => 'required|integer|exists:companies,id',
             'postal_code' => 'required',
@@ -157,7 +154,7 @@ class OrderController extends Controller
             ]
         ]);
 
-        event(new OrderWasCreated($order, $this->basket));
+        
 
         if (! $result->success) {
             // TODO: Find a way to attach listeners manually to the OrderWasCreated event.
@@ -204,22 +201,6 @@ class OrderController extends Controller
        return $pivots;
    }
 
-   protected function applyCoupon($id)
-   {
-       $coupon = Coupon::find($id);
-
-       if (!$coupon) {
-           return null;
-       }
-
-       if (!$this->basket->checkCoupon($coupon)) {
-           return null;
-       }
-
-       $coupon->members()->attach(auth()->guard('site')->id());
-
-       return $id;
-   }
 
 
 }

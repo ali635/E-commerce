@@ -36,9 +36,9 @@ class GeneralProductRequest extends FormRequest
             'price'                 => 'required|min:0|numeric',
             
             'special_price'         => 'nullable|numeric',
-            'special_price_type'    => 'required_with:special_price|in:fixed,percent',
-            'special_price_start'   => 'required_with:special_price|date_format:Y-m-d',
-            'special_price_end'     => 'required_with:special_price|date_format:Y-m-d',
+            'special_price_type'    => 'nullable|required_with:special_price|in:fixed,percent',
+            'special_price_start'   => 'nullable|required_with:special_price|date_format:Y-m-d',
+            'special_price_end'     => 'nullable|required_with:special_price|date_format:Y-m-d',
             'sku'                   => 'nullable|min:3|max:10',
             'manage_stock'          => 'required|in:0,1',
             'in_stock' => 'required|in:0,1',

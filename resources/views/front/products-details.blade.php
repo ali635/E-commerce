@@ -52,7 +52,7 @@
 
                                             <div class="js-qv-mask mask only-product">
                                                 <div class="row">
-                                                    @isset($product -> images)
+                                                    @isset($product->images)
                                                         @foreach($product -> images as $image)
                                                             <div class="item thumb-container col-md-6 col-xs-12 pt-30">
                                                                 <img class="img-fluid thumb js-thumb  selected "
@@ -72,11 +72,11 @@
                                 <div class="col-lg-7 col-md-8 col-xs-12 mt-sm-20">
                                     <div class="product-information">
                                         <div class="product-actions">
-                                            <form action="{{route('products.reviews.store',$product -> id )}}"
+                                            {{-- <form action="{{route('products.reviews.store',$product -> id )}}"
                                                   method="post" id="add-to-cart-or-refresh" class="row">
                                                 @csrf
                                                 <input type="hidden" name="id_product" value="{{$product -> id }}"
-                                                       id="product_page_product_id">
+                                                       id="product_page_product_id"> --}}
 
                                                 <div class="productdetail-right col-12 col-lg-6 col-md-6">
                                                     <div class="product-reviews">
@@ -163,13 +163,21 @@
                                                     <div id="_desktop_productcart_detail">
                                                         <div class="product-add-to-cart in_border">
                                                             <div class="add">
-                                                                <button class="btn btn-primary add-to-cart"
-                                                                        data-button-action="add-to-cart" type="submit">
-                                                                    <div class="icon-cart">
-                                                                        <i class="shopping-cart"></i>
-                                                                    </div>
-                                                                    <span>{{ __('site/site.add_to_cart') }}</span>
-                                                                </button>
+                                                                <form
+                                                                    action=""
+                                                                    method="post" class="formAddToCart">
+                                                                    @csrf
+                                                                    <input type="hidden" name="id_product"
+                                                                    value="{{$product -> id}}">
+                                                                    <a class="btn btn-primary cart-addition add-to-cart"
+                                                                    data-product-id="{{$product -> id}}" data-product-slug="{{$product -> slug}}"
+                                                                    data-button-action="add-to-cart">
+                                                                        <div class="icon-cart">
+                                                                            <i class="shopping-cart"></i>
+                                                                        </div>
+                                                                        <span>{{ __('site/site.add_to_cart') }}</span>
+                                                                    </a>
+                                                                </form>
                                                             </div>
 
                                                             <a class="addToWishlist  wishlistProd_22" href="#"
@@ -229,7 +237,7 @@
                                                         @endif
                                                     </div>
                                                 </div>
-                                            </form>
+                                            {{-- </form> --}}
 
                                         </div>
                                     </div>
@@ -443,12 +451,12 @@
                             <section class="relate-product product-accessories clearfix">
                                 <h3 class="h5 title_block">Related products<span class="sub_title">Hand-picked arrivals from the best designer</span>
                                 </h3>
-                                @if( isset($related_products) && count($related_products) > 0 )
-                                    @foreach($related_products as $_product)
+                              
                                 <div class="products product_list grid owl-carousel owl-theme" data-autoplay="true"
                                      data-autoplaytimeout="6000" data-loop="true" data-items="5" data-margin="0"
                                      data-nav="true" data-dots="false" data-items_mobile="2">
-
+                                     @if( isset($related_products) && count($related_products) > 0 )
+                                     @foreach($related_products as $_product)
                                     <div class="item  text-center">
                                         <div class="product-miniature js-product-miniature item-two first_item"
                                              data-id-product="{{$_product -> id }}" data-id-product-attribute="60" itemscope=""
@@ -505,9 +513,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
                                     @endforeach
-                                @endif
+                                    @endif
+                                </div>
+                            
                             </section>
                         </div>
                     </div>
@@ -520,44 +529,7 @@
     @include('front.includes.alert2')
 @stop
 
-@section('scripts')
-    <script>
-        $(document).on('click', '.quick-view', function () {
-            $('.quickview-modal-product-details-' + $(this).attr('data-product-id')).css("display", "block");
-        });
-        $(document).on('click', '.close', function () {
-            $('.quickview-modal-product-details-' + $(this).attr('data-product-id')).css("display", "none");
-            $('.not-loggedin-modal').css("display", "none");
-            $('.alert-modal').css("display", "none");
-            $('.alert-modal2').css("display", "none");
-        });
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $(document).on('click', '.addToWishlist', function (e) {
-            e.preventDefault();
-            @guest()
-            $('.not-loggedin-modal').css('display', 'block');
-            @endguest
-            $.ajax({
-                type: 'post',
-                url: "{{Route('wishlist.store')}}",
-                data: {
-                    'productId': $(this).attr('data-product-id'),
-                },
-                success: function (data) {
-                    if (data.wished)
-                        $('.alert-modal').css('display', 'block');
-                    else
-                        $('.alert-modal2').css('display', 'block');
-                }
-            });
-        });
-    </script>
 
-@stop
 @section('scripts')
     <script>
         $(document).on('click', '.quick-view', function () {

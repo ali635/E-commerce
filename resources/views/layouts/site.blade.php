@@ -373,28 +373,35 @@
             <div>
                 <div id="_mobile_account_list">
                     <div class="account-list-content">
-                        <div>
-                            <a class="login" href="login-1.html" rel="nofollow" title="Log in to your customer account"><i
-                                    class="fa fa-sign-in"></i>Sign in</a>
-                        </div>
-                        <div>
-                            <a class="register" href="login-1.html" rel="nofollow" title="Register Account"><i
-                                    class="fa fa-user"></i>Register Account</a>
-                        </div>
-                        <div>
-                            <a class="check-out" href="cart.html" rel="nofollow" title="Checkout"><i
-                                    class="material-icons">check_circle</i>Checkout</a>
-                        </div>
+                       
+                        @guest
+                        <a class="register" href="{{route('register')}}" data-link-action="display-register-form">
+                            {{ __('site/site.register') }}
+                        </a>
+                        <span class="or-text">{{ __('site/site.or') }}</span>
+                        <a class="login" href="{{ route('login') }}" rel="nofollow" title="Log in to your customer account">{{ __('site/site.sign_in') }}</a>
+                    @endguest
+                    @auth
+                        <a href="{{ route('logout') }}" onclick="event.preventDefault();  document.getElementById('logout.form').submit();">Logout</a>
+                        <form id="logout.form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            {{ csrf_field() }}
+                        </form>
+                    @endauth
+                    <div class="account-list-content">
+                        <a class="register" href="{{ route('vendor.index') }}" data-link-action="display-register-form">
+                            {{ __('site/site.Register_Vendor') }}
+                        </a>
+                    </div>
                         <div class="link_wishlist">
-                            <a href="login-2.html" title="My Wishlists">
-                                <i class="fa fa-heart"></i>My Wishlists
+                            <a href="{{ route('wishlist.products.index') }}" title="My Wishlists">
+                                <i class="fa fa-heart"></i>{{ __('site/site.wishlist') }}
                             </a>
                         </div>
                     </div>
                 </div>
-                <div class="links-currency" data-target="#box-currency" data-titlebox="Currency"><span>Currency</span><i
+                <div class="links-currency" data-target="#box-currency" data-titlebox="Currency"><span>{{ __('site/site.currency') }}</span><i
                         class="zmdi zmdi-arrow-right"></i></div>
-                <div class="links-language" data-target="#box-language" data-titlebox="Language"><span>Language</span><i
+                <div class="links-language" data-target="#box-language" data-titlebox="Language"><span>{{ __('site/site.language') }}</span><i
                         class="zmdi zmdi-arrow-right"></i></div>
             </div>
         </div>
@@ -402,49 +409,22 @@
             <div class="w-100">
                 <div class="item-currency current">
                     <a title="British Pound" rel="nofollow"
-                       href="index-1.htm?home=home_3&amp;SubmitCurrency=1&amp;id_currency=1">British Pound: GBP</a>
-                </div>
-                <div class="item-currency">
-                    <a title="US Dollar" rel="nofollow"
-                       href="index-2.htm?home=home_3&amp;SubmitCurrency=1&amp;id_currency=2">US Dollar: USD</a>
+                       href="index-1.htm?home=home_3&amp;SubmitCurrency=1&amp;id_currency=1">USD</a>
                 </div>
             </div>
         </div>
 
         <div id="box-language" class="box-content d-flex">
             <div class="w-100">
-                <div class="item-language current">
-                    <a href="index.htm?home=home_3" class="d-flex align-items-center"><img class="img-fluid mr-2"
-                                                                                           src="../img/l/1.jpg"
-                                                                                           alt="English (English)"
-                                                                                           width="16" height="11"><span>English</span></a>
+                <div class="item-language ">
+                    @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                    <a hreflang="{{ $localeCode }}"
+                     class="d-flex align-items-center"
+                     href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}"><span> {{ $properties['native'] }}</span></a>
+                     <div class="dropdown-divider"></div>
+                     @endforeach
                 </div>
-                <div class="item-language">
-                    <a href="http://demo.bestprestashoptheme.com/savemart/fr/?home=home_3"
-                       class="d-flex align-items-center"><img class="img-fluid mr-2" src="../img/l/2.jpg"
-                                                              alt="Français (French)" width="16" height="11"><span>Français</span></a>
-                </div>
-                <div class="item-language">
-                    <a href="http://demo.bestprestashoptheme.com/savemart/es/?home=home_3"
-                       class="d-flex align-items-center"><img class="img-fluid mr-2" src="../img/l/3.jpg"
-                                                              alt="Español (Spanish)" width="16" height="11"><span>Español</span></a>
-                </div>
-                <div class="item-language">
-                    <a href="http://demo.bestprestashoptheme.com/savemart/it/?home=home_3"
-                       class="d-flex align-items-center"><img class="img-fluid mr-2" src="../img/l/4.jpg"
-                                                              alt="Italiano (Italian)" width="16" height="11"><span>Italiano</span></a>
-                </div>
-                <div class="item-language">
-                    <a href="http://demo.bestprestashoptheme.com/savemart/pl/?home=home_3"
-                       class="d-flex align-items-center"><img class="img-fluid mr-2" src="../img/l/5.jpg"
-                                                              alt="Polski (Polish)" width="16"
-                                                              height="11"><span>Polski</span></a>
-                </div>
-                <div class="item-language">
-                    <a href="http://demo.bestprestashoptheme.com/savemart/ar/?home=home_3"
-                       class="d-flex align-items-center"><img class="img-fluid mr-2" src="../img/l/6.jpg"
-                                                              alt="اللغة العربية (Arabic)" width="16" height="11"><span>اللغة العربية</span></a>
-                </div>
+               
             </div>
         </div>
 
@@ -453,14 +433,14 @@
 
 
 <div id="stickymenu_bottom_mobile" class="d-flex align-items-center justify-content-center hidden-md-up text-center">
-    <div class="stickymenu-item"><a href="http://demo.bestprestashoptheme.com/savemart/"><i
+    <div class="stickymenu-item"><a href="{{route('home')}}"><i
                 class="zmdi zmdi-home"></i><span>Home</span></a></div>
     <div class="stickymenu-item"><a href="#" class="js-btn-search"><i
                 class="zmdi zmdi-search"></i><span>Search</span></a></div>
     <div class="stickymenu-item">
-        <div id="_mobile_cart_bottom" class="nov-toggle-page" data-target="#mobile-blockcart"></div>
+        <div id="_mobile_cart_bottom" class="nov-toggle-page" data-target="#mobile-blockcart"><a href="{{route('site.cart.index')}}"></a></div>
     </div>
-    <div class="stickymenu-item"><a href="login-2.html"><i class="zmdi zmdi-favorite-outline"></i><span>Wishlist</span></a>
+    <div class="stickymenu-item"><a href="{{ route('wishlist.products.index') }}"><i class="zmdi zmdi-favorite-outline"></i><span>Wishlist</span></a>
     </div>
     <div class="stickymenu-item"><a href="#" class="nov-toggle-page" data-target="#mobile-pageaccount"><i
                 class="zmdi zmdi-account-o"></i><span>Account</span></a></div>

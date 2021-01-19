@@ -114,7 +114,7 @@
                         <select name="manage_stock" class="select2 form-control" id="manageStock">
                             <optgroup label="من فضلك أختر النوع ">
                                 <option value="1">{{ __('admin/sidebar.Tracking_Enabled') }}</option>
-                                <option value="0" selected>{{ __('admin/sidebar.not_Tracking_Enabled') }}</option>
+                                <option value="0">{{ __('admin/sidebar.not_Tracking_Enabled') }}</option>
                             </optgroup>
                         </select>
                         @error('manage_stock')

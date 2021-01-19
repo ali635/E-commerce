@@ -22,10 +22,16 @@ Route::group([
     Route::group(['namespace' => 'Site'/*, 'middleware' => 'guest'*/], function () {
         //guest  user
         route::get('/', 'HomeController@home')->name('home')->middleware('VerifiedUser');
+        // Route::get('/', 'HomeController@getIndex')->name('site.cart.index');
         route::get('category/{slug}', 'CategoryController@productsBySlug')->name('category');
         route::get('product/{slug}', 'ProductController@productsBySlug')->name('product.details');
+        route::get('/search', 'SearchController@search');
+        Route::get('show','InformationController@show')->name('information.about');
+        Route::get('/vendor', 'VendorController@index')->name('vendor.index');
+        Route::post('store', 'VendorController@store')->name('vendor.register');
 
-        /**
+
+                /**
          *  Cart routes
          */
         Route::group(['prefix' => 'cart'], function () {
@@ -50,6 +56,7 @@ Route::group([
         Route::get('verify', 'VerificationCodeController@getVerifyPage')->name('get.verification.form');
         Route::get('products/{productId}/reviews', 'ProductReviewController@index')->name('products.reviews.index');
         Route::post('products/{productId}/reviews', 'ProductReviewController@store')->name('products.reviews.store');
+        
         Route::get('payment/{amount}', 'PaymentController@getPayments') -> name('payment');
         Route::post('payment', 'PaymentController@processPayment') -> name('payment.process');
 

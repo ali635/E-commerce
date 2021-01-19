@@ -3,9 +3,22 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Enumerations\CategoryType;
+use App\Http\Requests\GeneralProductRequest;
+use App\Http\Requests\MainCategoryRequest;
+use App\Http\Requests\ProductImagesRequest;
+use App\Http\Requests\ProductPriceValidation;
+use App\Http\Requests\ProductStockRequest;
 use App\Http\Requests\SliderImagesRequest;
+use App\Models\Brand;
+use App\Models\Category;
+use App\Models\Image;
+use App\Models\Product;
 use App\Models\Slider;
+use App\Models\Tag;
 use Illuminate\Http\Request;
+use DB;
+
 class SliderController extends Controller
 {
 

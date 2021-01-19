@@ -16,7 +16,7 @@ use App\Models\Tag;
 use DB;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 
 class ProductsController extends Controller
 {
@@ -31,7 +31,7 @@ class ProductsController extends Controller
         $data =[];
         $data['brands']       = Brand::active()->select('id')->get();
         $data['tags']         = Tag::select('id')->get();
-        $data['categories']   = Category::active()->parent()->select('id')->get();
+        $data['categories']   = Category::where('is_active','1')->parent()->select('id')->get();
 
         return view('dashboard.products.general.create',$data);
     }
@@ -61,10 +61,13 @@ class ProductsController extends Controller
             'special_price_start' => $request->special_price_start,
             'special_price_end' => $request->special_price_end,
             'sku' => $request->sku,
+            'manage_stock' => $request->manage_stock,
+            'in_stock' => $request->in_stock,
             'qty' => $request->qty,
         ]);
         
         //save translations
+        $product->Created_by = auth('admin')->user()->name;
         $product->name = $request->name;
         $product->description = $request->description;
         $product->short_description = $request->short_description;
@@ -78,7 +81,7 @@ class ProductsController extends Controller
         //save product tags
 
         DB::commit();
-        return redirect()->route('admin.products')->with(['success' => __('admin/sidebar.add_pro_img')]);
+        return redirect()->route('admin.products')->with(['success' => __('admin/sidebar.add_pro')]);
 
     }
     /*--------------------*/

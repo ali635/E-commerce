@@ -1,5 +1,5 @@
+
 @extends('layouts.admin')
-@section('title','تعديل | وسائل توصيل')
 @section('content')
     <div class="app-content content">
         <div class="content-wrapper">
@@ -53,7 +53,7 @@
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label for="projectinput1"> {{ __('admin/sidebar.name') }} </label>
+                                                            <label for="projectinput1"> الاسم </label>
                                                             <input type="text" value="{{$shippingMethod -> value  }}" id="name"
                                                                    class="form-control"
                                                                    placeholder="  "
@@ -66,7 +66,7 @@
 
                                                          <div class="col-md-6">
                                                             <div class="form-group">
-                                                                <label for="projectinput1"> {{ __('admin/sidebar.value') }} </label>
+                                                                <label for="projectinput1"> قيمه التوصيل </label>
                                                                 <input type="number" value="{{$shippingMethod -> plain_value}}" id="plain_value"
                                                                        class="form-control"
                                                                        placeholder="  "
@@ -103,4 +103,5 @@
         </div>
     </div>
 
-@endsection
+
+@stop

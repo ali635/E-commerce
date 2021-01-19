@@ -42,14 +42,12 @@ class CartController extends Controller
 
     public function getIndex()
     {
-        $basket = $this -> basket ;
+        $basket = $this->basket ;
         
-        
-   
         return view('front.cart.index',compact('basket'));
         
     }
-
+    
     /**
      * Add items to the Basket.
      *
@@ -60,7 +58,7 @@ class CartController extends Controller
      */
     public function postAdd(Request $request)
     {
-         $slug =$request -> product_slug ;
+         $slug =$request->product_slug ;
          $product = Product::where('slug', $slug)->firstOrFail();
 
         try {
@@ -69,7 +67,7 @@ class CartController extends Controller
             return 'Quantity Exceeded';  // must be trans as the site is multi languages
         }
 
-        return 'Product added successfully to the card ';
+        return redirect()->route('site.cart.index')->with(['success' => __('admin/sidebar.add_brand')]);
     }
 
     /**

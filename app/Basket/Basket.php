@@ -184,9 +184,10 @@ class Basket
 
 		foreach ($products as $product) {
 			$product->quantity = $this->get($product)['quantity'];
-			$product->coupon = $this->get($product)['coupon'];
+			// $product->coupon = $this->get($product)['coupon'];
 			$items[] = $product;
 		}
+		
 
 		return $items;
 	}
@@ -211,9 +212,20 @@ class Basket
 				continue;
 			}
 
-			$total += $item->getTotal(true);
-		}
 
+			$total += $item->getTotal(true) * $item->quantity;
+		}
+		return $total * (15/100) + $total;
+	}
+	public function qty()
+	{
+		$total = 0;
+		foreach ($this->all() as $item) {
+			if ($item->outOfStock()) {
+				continue;
+			}
+			$total +=$item->quantity;
+		}
 		return $total;
 	}
 

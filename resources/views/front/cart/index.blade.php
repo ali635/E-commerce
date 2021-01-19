@@ -73,20 +73,22 @@
                                                                                     <div class="label">Qty:</div>
                                                                                     <div
                                                                                         class="input-group bootstrap-touchspin">
-                                                                                <span
-                                                                                    class="input-group-addon bootstrap-touchspin-prefix"
-                                                                                    style="display: none;"></span><input
-                                                                                            id="quantity_wanted"
-                                                                                            class="js-cart-line-product-quantity form-control"
+                                                                                    <span
+                                                                                        class="input-group-addon bootstrap-touchspin-prefix"
+                                                                                        style="display: none;"></span>
+                                                                                        <input
+                                                                                                id="quantity_wanted"
+                                                                                                class="js-cart-line-product-quantity form-control"
 
-                                                                                            data-product-id="5"
-                                                                                            type="text"
-                                                                                            value="1"
-                                                                                            name="product-quantity-spin"
-                                                                                            min="1"
-                                                                                            style="display: block;"><span
-                                                                                            class="input-group-addon bootstrap-touchspin-postfix"
-                                                                                            style="display: none;"></span>
+                                                                                                data-product-id="5"
+                                                                                                type="text"
+                                                                                                value="{{ $product['quantity']}}"
+                                                                                                name="product-quantity-spin"
+                                                                                                min="1"
+                                                                                                style="display: block;">
+                                                                                                <span
+                                                                                                class="input-group-addon bootstrap-touchspin-postfix btnAdd"
+                                                                                                style="display: none;"></span>
 
                                                                                     </div>
                                                                                 </div>
@@ -135,10 +137,15 @@
                             <div class="cart-summary">
                                 <div class="cart-detailed-totals">
                                     <div class="cart-summary-products">
-                                        <div class="summary-label">There are  ({{$basket -> itemCount()}}) items in your cart</div>
+                                        <div class="summary-label cart-counter">There are  ({{$basket -> itemCount()}}) items in your cart</div>
                                     </div>
 
                                     <div class="">
+                                        
+                                        <div class="cart-summary-line cart-total">
+                                            <span class="label">Tax:</span>
+                                            <span class="value">15%</span>
+                                        </div>    
                                         <div class="cart-summary-line cart-total">
                                             <span class="label">Total:</span>
                                             <span class="value">{{$basket  -> subTotal()}}</span>

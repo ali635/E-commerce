@@ -67,17 +67,21 @@
                                                         <td>
                                                             <div class="btn-group" role="group"
                                                                  aria-label="Basic example">
+                                                                {{-- @can('edit_product') 
                                                                 <a href="{{route('admin.products.general.edit',$product->id)}}"
                                                                    class="btn btn-outline-primary btn-min-width box-shadow-3 mr-1 mb-1">{{ __('admin/sidebar.edit') }}</a>
-                                                                   
+                                                                @endcan                                                                --}}
+                                                               @can('photo_product') 
                                                                 <a href="{{route('admin.products.images',$product->id)}}"
                                                                     class="btn btn-outline-primary btn-min-width box-shadow-3 mr-1 mb-1">اضافة صور</a>
-
+                                                                    @endcan
                                                                 <a href="{{route('admin.products.general.show',$product->id)}}"
                                                                 class="btn btn-outline-primary btn-min-width box-shadow-3 mr-1 mb-1">{{ __('admin/sidebar.product_img') }}</a>
- 
+                                                                @can('delete_product') 
                                                                 <a href="{{route('admin.products.general.delete',$product->id)}}"
                                                                    class="btn btn-outline-danger btn-min-width box-shadow-3 mr-1 mb-1">{{ __('admin/sidebar.delete') }}</a>
+                                                                @endcan
+
                                                             </div>
                                                         </td>
                                                     </tr>

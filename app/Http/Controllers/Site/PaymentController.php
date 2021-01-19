@@ -12,23 +12,28 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use GuzzleHttp\Client;
+use App\Basket\Basket;
 
 class PaymentController extends Controller
 {
     private $base_url;
     private $request_client;
     private $token;
+    protected $basket;
+    protected $id;
 
-    public function __construct(Client $request_client)
+    public function __construct(Client $request_client,Basket $basket)
     {
         $this->request_client = $request_client;
-        $this->base_url = env('MYFATOORAHBASEURL');
-        $this->token = env('MYFATOORAHTOKEN');
+        $this->base_url = "https://apitest.myfatoorah.com";
+        $this->token = "Tfwjij9tbcHVD95LUQfsOtbfcEEkw1hkDGvUbWPs9CscSxZOttanv3olA6U6f84tBCXX93GpEqkaP_wfxEyNawiqZRb3Bmflyt5Iq5wUoMfWgyHwrAe1jcpvJP6xRq3FOeH5y9yXuiDaAILALa0hrgJH5Jom4wukj6msz20F96Dg7qBFoxO6tB62SRCnvBHe3R-cKTlyLxFBd23iU9czobEAnbgNXRy0PmqWNohXWaqjtLZKiYY-Z2ncleraDSG5uHJsC5hJBmeIoVaV4fh5Ks5zVEnumLmUKKQQt8EssDxXOPk4r3r1x8Q7tvpswBaDyvafevRSltSCa9w7eg6zxBcb8sAGWgfH4PDvw7gfusqowCRnjf7OD45iOegk2iYSrSeDGDZMpgtIAzYVpQDXb_xTmg95eTKOrfS9Ovk69O7YU-wuH4cfdbuDPTQEIxlariyyq_T8caf1Qpd_XKuOaasKTcAPEVUPiAzMtkrts1QnIdTy1DYZqJpRKJ8xtAr5GG60IwQh2U_-u7EryEGYxU_CUkZkmTauw2WhZka4M0TiB3abGUJGnhDDOZQW2p0cltVROqZmUz5qGG_LVGleHU3-DgA46TtK8lph_F9PdKre5xqXe6c5IYVTk4e7yXd6irMNx4D4g1LxuD8HL4sYQkegF2xHbbN8sFy4VSLErkb9770-0af9LT29kzkva5fERMV90w";
+        $this->basket = $basket;
     }
 
     public function getPayments($amount)
     {
-        return view('front.cart.payments', compact('amount'));
+        $basket = $this->basket ;
+        return view('front.cart.payments', compact('amount','basket'));
     }
 
     /**
@@ -130,10 +135,12 @@ class PaymentController extends Controller
             // if success payment save order and send realtime notification to admin
             $order = $this->saveOrder($amount, $PaymentMethodId);  // your task is  . add products with options to order to preview on admin
             $this->saveTransaction($order, $PaymentId);
+            
             DB::commit();
 
             //fire event on order complete success for realtime notification
             event(new NewOrder($order));
+            return view('front.cart.index');
 
         } catch (\Exception $ex) {
             DB::rollBack();
@@ -150,8 +157,9 @@ class PaymentController extends Controller
 
     private function saveOrder($amount, $PaymentMethodId)
     {
+        
         return Order::create([
-            'customer_id' => auth()->id(),
+            'customer_id' => auth()->user()->id,
             'customer_phone' => auth()->user()->mobile,
             'customer_name' => auth()->user()->name,
             'total' => $amount,

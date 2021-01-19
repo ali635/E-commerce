@@ -171,7 +171,6 @@
         </div>
     </div>
 @stop
-remove-from-cart
 
 @section('scripts')
     <script>

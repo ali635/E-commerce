@@ -17,9 +17,7 @@
                     </div>
                 </div>
                 <div class="contentsticky_group d-flex justify-content-end">
-                    <div class="header_link_myaccount">
-                        <a class="login" href="login-1.html" rel="nofollow" title="Log in to your customer account"><i class="header-icon-account"></i></a>
-                    </div>
+                    
                     <div class="header_link_wishlist">
                         <a href="{{ route('wishlist.products.index') }}" title="My Wishlists">
                             <i class="header-icon-wishlist"></i>
@@ -36,7 +34,13 @@
                                         </div>
 
                                     </a>
-                                    <div class="cart-products-count">0</div>
+                                    <div class="cart-products-count cart-counter">
+                                    @if ( \Request::is('login') OR \Request::is('register')  )
+                                        0
+                                    @else
+                                    {{ $basket->qty() }}
+                                    @endif
+                                    </div>
                                 </div>
                                 <div class="cart-right d-flex flex-column align-self-end ml-13">
                                     <span class="title-cart">Cart</span>

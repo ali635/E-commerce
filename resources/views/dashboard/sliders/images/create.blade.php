@@ -1,5 +1,4 @@
 @extends('layouts.admin')
-@section('title','انشاء |الصور المتحركة')
 @section('content')
 
     <div class="app-content content">
