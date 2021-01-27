@@ -58,7 +58,7 @@ Route::group([
         Route::post('products/{productId}/reviews', 'ProductReviewController@store')->name('products.reviews.store');
         
         Route::get('payment/{amount}', 'PaymentController@getPayments') -> name('payment');
-        Route::post('payment', 'PaymentController@processPayment') -> name('payment.process');
+        Route::post('payment', 'PaymentController@processPayment')->name('payment.process');
 
     });
 

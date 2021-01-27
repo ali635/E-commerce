@@ -23,6 +23,19 @@
                 </ul>
             </li>
             @endcan
+            <li class="nav-item"><a href=""><i class="la la-group"></i>
+              <span class="menu-title" data-i18n="nav.dash.main">الطلبات </span>
+              <span
+                  class="badge badge badge-danger badge-pill float-right mr-2">{{ \App\Models\Order::count() }}</span>
+          </a>
+          <ul class="menu-content">
+              <li class=""><a class="menu-item" href="{{ route('admin.orders') }}"
+                                    data-i18n="nav.dash.ecommerce">{{ __('admin/sidebar.all') }}</a>
+              </li>
+              <li>
+              </li>
+          </ul>
+      </li>
 
             {{-- <li class="nav-item"><a href=""><i class="la la-group"></i>
                     <span class="menu-title" data-i18n="nav.dash.main">{{ __('admin/sidebar.sub_categories') }}   </span>

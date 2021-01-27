@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use GuzzleHttp\Client;
 use App\Basket\Basket;
+use App\Models\order_product;
+use App\Models\Product;
 
 class PaymentController extends Controller
 {
@@ -43,7 +45,7 @@ class PaymentController extends Controller
     {
 
         $error = '';
-
+        
         //best practice as we do sperate validation on request form file
         $validator = Validator::make($request->all(), [
             'ccNum' => 'required',
@@ -131,16 +133,21 @@ class PaymentController extends Controller
         $json = json_decode((string)$response, true);
         $PaymentId = $json["Data"]["PaymentId"];
         try {
+
             DB::beginTransaction();
+            $items = $this->basket->all();
+            
             // if success payment save order and send realtime notification to admin
             $order = $this->saveOrder($amount, $PaymentMethodId);  // your task is  . add products with options to order to preview on admin
-            $this->saveTransaction($order, $PaymentId);
+            $this->saveTransaction($order, $PaymentId,$items);
             
+            // $this->orderProduct($order,$items);
             DB::commit();
+            $this->basket->clear();
+            $basket = $this->basket ;
+            toastr()->success(__('site/site.buy_product'));
 
-            //fire event on order complete success for realtime notification
-            event(new NewOrder($order));
-            return view('front.cart.index');
+            return redirect()->route('site.cart.index',compact('basket'));
 
         } catch (\Exception $ex) {
             DB::rollBack();
@@ -167,17 +174,46 @@ class PaymentController extends Controller
             'payment_method' => $PaymentMethodId,  // you can use enumeration here as we use before for best practices for constants.
             'status' => Order::PAID,
         ]);
-
     }
 
-    private function saveTransaction(Order $order, $PaymentId)
+
+
+
+
+    private function saveTransaction(Order $order, $PaymentId,$items)
     {
         Transaction::create([
             'order_id' => $order->id,
             'transaction_id' => $PaymentId,
             'payment_method' => $order->payment_method,
         ]);
+        foreach ($items as $item) {
+
+            order_product::create([
+                'product_id'=>$item->id,
+                'order_id' => $order->id,
+                'quantity'=>$item->quantity
+            ]);    
+        }
     }
+
+    //  protected function getPivot($items)
+    // {
+    //     $pivots = [];
+    //     foreach ($items as $item) {
+    //         $pivots[] = [
+    //             'total' => $item->getTotal(),
+    //             'price' => $item->price,
+                
+    //         ];
+
+    //         $item->stock -= $item->quantity;
+    //         $item->sold += $item->quantity;
+    //         $item->save();
+    //     }
+    //     return $pivots;
+    // }
+
 
 
 }

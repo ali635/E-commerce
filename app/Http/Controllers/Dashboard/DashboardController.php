@@ -11,7 +11,7 @@ class DashboardController extends Controller
 {
     public function index(){
         
-        $orders = Order::where('customer_id', Auth::user()->id)->orderBy('id', 'DESC')->latest()->take(10)->get();
+        $orders = Order::orderBy('id', 'DESC')->latest()->take(10)->get();
         return view('dashboard.index',compact('orders'));
     }
     

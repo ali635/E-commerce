@@ -129,9 +129,10 @@ class Product extends Model
     }
 
 
-public function getTotal($converted = true)
+    public function getTotal($converted = true)
     {
         return $total =  $this->special_price ?? $this -> price;
 
     }
+
 }

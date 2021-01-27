@@ -21,6 +21,7 @@ Route::group(
 
         Route::group(['namespace' => 'Dashboard','middleware' => 'auth:admin','prefix' => 'admin'], function () {
             Route::get('/','DashboardController@index')->name('admin.dashboard');
+            
             Route::get('logout','LoginController@logout')->name('admin.logout');
            
            
@@ -34,6 +35,10 @@ Route::group(
             Route::group(['prefix' => 'profile'], function () {
                 Route::get('edit','ProfileController@editProfile')->name('edit.profile');
                 Route::put('update','ProfileController@updateProfile')->name('update.profile');
+            });
+            Route::group(['prefix' => 'orders'], function () {
+                Route::get('/','OrderController@index')->name('admin.orders');
+                
             });
             ##################### Categories route ################
             Route::group(['prefix' => 'main_categories','middleware' => 'can:categories'], function () {

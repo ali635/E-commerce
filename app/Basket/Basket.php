@@ -176,10 +176,11 @@ class Basket
 		$ids = [];
 		$items = [];
 
-		foreach ($this->storage->all() as $product) {
+		if($this->storage->all()){
+			foreach ($this->storage->all() as $product) {
 			$ids[] = $product['product_id'];
-		}
-
+			}
+		} 
 		$products = $this->product->find($ids);
 
 		foreach ($products as $product) {
@@ -197,7 +198,9 @@ class Basket
 	*/
 	public function itemCount()
 	{
+		if($this->storage->all()){
 		return count($this->storage->all());
+		}
 	}
 
 	/**

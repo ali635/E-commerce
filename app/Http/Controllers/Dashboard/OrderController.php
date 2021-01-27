@@ -4,14 +4,15 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\order_product;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    public function show()
+    public function index()
     {
-        $orders = Order::where('id', '1')->first();
-        
-        return view('dashboard.index',compact('orders'));
+        $orders = Order::with('products')->orderBy('id', 'DESC')->get();
+        return view('dashboard.orders.index',compact('orders'));
     }
 }

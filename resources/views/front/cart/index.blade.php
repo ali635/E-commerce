@@ -1,5 +1,7 @@
 @extends('layouts.site')
-
+@section('css')
+    @toastr_css
+@endsection
 @section('content')
     <nav data-depth="1" class="breadcrumb-bg">
         <div class="container no-index">
@@ -127,12 +129,13 @@
                                 </div>
                             </div>
                             
-                            <a class="label btn btn-primary" href="http://demo.bestprestashoptheme.com/savemart/en/">
+                            <a class="label btn btn-primary" href="{{ route('home') }}">
                                 Continue shopping
                             </a>
                             <!-- shipping informations -->
                         </div>
                         <!-- Right Block: cart subtotal & cart total -->
+                        @if ($basket->itemCount() != 0)
                         <div class="cart-grid-right col-xs-12 col-lg-3">
                             <div class="cart-summary">
                                 <div class="cart-detailed-totals">
@@ -167,23 +170,23 @@
 
                             <div class="blockreassurance_product">
                                 <div>
-            <span class="item-product">
+                              <span class="item-product">
                                                         <img class="svg invisible"
                                                              src="{{ asset('assets/images/insurance.png') }}">
                                     &nbsp;
-            </span>
+                                </span>
                                     <p class="block-title" style="color:#000000;">Security policy (edit with
                                         Customer reassurance module)</p>
                                 </div>
                                 <div>
-            <span class="item-product">
-                                                        <img class="svg invisible"
-                                                             src="{{ asset('assets/images/truck.png') }}">
-                                    &nbsp;
-            </span>
-                                    <p class="block-title" style="color:#000000;">Delivery policy (edit with
-                                        Customer reassurance module)</p>
-                                </div>
+                                <span class="item-product">
+                                                                            <img class="svg invisible"
+                                                                                src="{{ asset('assets/images/truck.png') }}">
+                                                        &nbsp;
+                                </span>
+                                                        <p class="block-title" style="color:#000000;">Delivery policy (edit with
+                                                            Customer reassurance module)</p>
+                                                    </div>
 
                                 
                                 <div class="clearfix"></div>
@@ -191,6 +194,59 @@
 
 
                         </div>
+                        @else
+                        <div class="cart-grid-right col-xs-12 col-lg-3">
+                            <div class="cart-summary">
+                                <div class="cart-detailed-totals">
+                                    <div class="cart-summary-products">
+                                        <div class="summary-label cart-counter">There are  ({{$basket -> itemCount()}}) items in your cart</div>
+                                    </div>
+
+                                    <div class="">
+                                        
+                                        <div class="cart-summary-line cart-total">
+                                            <span class="label">Tax:</span>
+                                            <span class="value">15%</span>
+                                        </div>    
+                                        <div class="cart-summary-line cart-total">
+                                            <span class="label">Total:</span>
+                                            <span class="value">{{$basket  -> subTotal()}}</span>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                            <div class="blockreassurance_product">
+                                <div>
+                              <span class="item-product">
+                                                        <img class="svg invisible"
+                                                             src="{{ asset('assets/images/insurance.png') }}">
+                                    &nbsp;
+                                </span>
+                                    <p class="block-title" style="color:#000000;">Security policy (edit with
+                                        Customer reassurance module)</p>
+                                </div>
+                                <div>
+                                <span class="item-product">
+                                                                            <img class="svg invisible"
+                                                                                src="{{ asset('assets/images/truck.png') }}">
+                                                        &nbsp;
+                                </span>
+                                                        <p class="block-title" style="color:#000000;">Delivery policy (edit with
+                                                            Customer reassurance module)</p>
+                                                    </div>
+
+                                
+                                <div class="clearfix"></div>
+                            </div>
+
+
+                        </div>
+                        @endif
+                       
                     </div>
                 </section>
             </div>
@@ -219,4 +275,6 @@
             });
         });
     </script>
+    @toastr_js
+    @toastr_render
     @stop

@@ -32,7 +32,7 @@ return [
     'logout'            => 'Logout',
     'Register_Vendor'   => 'Vendor registration request',
     'or'                => 'or',
-    ''          => '',
+    'buy_product'       => 'The product has been purchased successfully',
         ''          => '',
         ''          => '',
         ''          => '',

@@ -78,6 +78,19 @@ return [
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
+        'banners' => [
+            'driver' => 'local',
+            'root' => public_path('assets/images/banners'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+        ],
+        'information' => [
+            'driver' => 'local',
+            'root' => public_path('assets/images/information'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+        ],
+        
 
         's3' => [
             'driver' => 's3',

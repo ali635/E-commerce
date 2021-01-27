@@ -16,7 +16,9 @@ class Order extends Model
      *
      * @var array
      */
-    protected $guarded = [];
+    // protected $guarded = [];
+    protected $table = 'orders';
+    protected $fillable =['customer_id','customer_phone','customer_name','total','locale','payment_method','status'];
 
     /**
      * The attributes that should be mutated to dates.
@@ -33,5 +35,10 @@ class Order extends Model
 
     public function user(){
         return $this -> belongsToMany(User::class,'customer_id');
+    }
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class)->withPivot('quantity');
     }
 }
